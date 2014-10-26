@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Steve Gargan
+  description: Roles to install Consul and run consul.
+  license: MIT
+  min_ansible_version: 1.7
+
+  platforms:
+    - name: GenericUNIX
+      versions:
+        - any
+
+  categories:
+    - clustering
+    - monitoring
+
+dependencies:
+  - { role: sgargan.supervisor }

@@ -1,0 +1,7 @@
+import sys, zipfile
+
+zip = sys.argv[1]
+dest = sys.argv[2]
+
+with zipfile.ZipFile(zip, "r") as z:
+    z.extractall(dest)

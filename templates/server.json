@@ -1,0 +1,8 @@
+{
+  "server": true,
+  "ui_dir": "{{consul_ui_dir}}",
+  "enable_syslog": true,
+  "bootstrap_expect": {{consul_join | length}},
+  "advertise_addr": "{{consul_advertise_interface}}",
+  "bind": "{{consul_bind_interface}}"
+}

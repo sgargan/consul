@@ -1,0 +1,16 @@
+- name: add common configuration
+  template: src=common.json dest={{consul_conf_dir}}/common.json owner=consul group=consul
+  notify:
+    - restart consul
+
+- name: Add server configuration
+  template: src=server.json dest={{consul_conf_dir}}/server.json owner=consul group=consul
+  when: consul_server
+  notify:
+    - restart consul
+
+- name: Install the supervisord config script
+  template: src=supervisor.d_consul.conf dest={{supervisord_config_dir}}/consul.conf owner=root group=root mode=0644
+  notify:
+    - supervisor started
+    - restart consul
