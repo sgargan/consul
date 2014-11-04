@@ -1,10 +1,28 @@
 {
   "datacenter": "{{consul_datacenter}}",
+
   "data_dir": "{{consul_data_dir}}",
-  "enable_syslog": true,
+
   "log_level": "{{consul_log_level}}",
-  "client_addr": "0.0.0.0",
-  "node_name": "{{consul_nodename}}"{%if consul_join|length > 0 %},
-  "start_join": [{% for server in consul_join %} "{{server}}" {% if not loop.last %}, {% endif %}{% endfor %}]
-  {% endif %}
+
+  "node_name": "{{consul_node_name}}",
+
+  "check_update_interval": "{{consul_check_update_interval}}",
+
+  "disable_update_check": {{consul_disable_update_check}},
+
+  "enable_debug": {{consul_enable_debug}},
+
+  "enable_syslog": {{consul_enable_syslog}},
+
+  "leave_on_terminate": {{consul_leave_on_terminate}},
+
+  "skip_leave_on_interrupt": {{consul_skip_leave_on_interrupt}},
+
+  {% if consul_statsd_enabled %}"statsd_addr": "{{consul_statsd_addr}}",{% endif %}
+
+  {% if consul_statsite_enabled %}"statsite_addr": "{{consul_statsite_addr}}",{% endif %}
+
+  "syslog_facility": "{{consul_syslog_facility}}"
+
 }

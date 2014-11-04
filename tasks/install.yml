@@ -1,8 +1,3 @@
-- name: install archive tool
-  apt: pkg=unzip state=present
-  tags:
-    - prereq
-
 - get_url: url='{{consul_url}}' dest=/tmp/consul.zip validate_certs=no
 
 - get_url: url='{{consul_ui_url}}' dest=/tmp/consul_ui.zip validate_certs=no

@@ -1,5 +1,22 @@
+- local_action: script certs.sh
+  register: stat_result
+  sudo: no
+
+- debug: var=stat_result
+
+- name: copy over certificates and keys for security
+  copy: src='{{item.name}}' dest='{{item.dest}}' owner={{consul_user}} group={{consul_group}} mode=600
+  with_items:
+    - {name: 'consul_ca.crt', dest: '{{consul_ca_file}}'}
+    - {name: 'consul.crt', dest: '{{consul_cert_file}}'}
+    - {name: 'consul.key', dest: '{{consul_key_file}}'}
+
 - name: add common configuration
-  template: src=common.json dest={{consul_conf_dir}}/common.json owner=consul group=consul
+  template: src={{item}} dest={{consul_conf_dir}}/{{item}} owner=consul group=consul
+  with_items:
+    - common.json
+    - connections.json
+    - security.json
   notify:
     - restart consul
 

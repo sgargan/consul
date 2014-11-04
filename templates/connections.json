@@ -1,0 +1,41 @@
+{
+{%if consul_join|length > 0 %}
+"start_join": [{% for server in consul_join %} "{{server}}" {% if not loop.last %}, {% endif %}{% endfor %}],
+{% endif %}
+{%if consul_retry_join|length > 0 %}
+"retry_join": [{% for server in consul_join %} "{{server}}" {% if not loop.last %}, {% endif %}{% endfor %}],
+"rejoin_after_leave": {{consul_rejoin_after_leave}},
+"retry_interval": "{{consul_retry_interval}}",
+{% endif %}
+
+"addresses": {
+  {%if consul_dns_enabled %}"dns": "{{consul_dns_address}}",{% endif %}
+  "http": "{{consul_http_address}}",
+  "rpc": "{{consul_rpc_address}}",
+  "advertise_addr": "{{consul_advertise_address}}"
+},
+
+"client_addr": "{{consul_client_address}}",
+
+"bind_addr": "{{consul_bind_address}}",
+
+"ports": {
+  {%if consul_dns_enabled %}"dns": {{consul_dns_port}},
+{% endif %}
+  "http": {{consul_http_port}},
+  "rpc": {{consul_rpc_port}},
+  "serf_lan": {{consul_serf_lan_port}},
+  "serf_wan": {{consul_serf_wan_port}},
+  "server": {{consul_server_port}}
+},
+
+{%if consul_dns_enabled %}
+"dns_config": {
+  "max_stale": "{{consul_dns_max_stale}}",
+  "node_ttl": "{{consul_dns_node_ttl}}",
+  "enable_truncate": {{consul_dns_enable_truncate}},
+  "domain": "{{consul_dns_domain}}"
+}{% endif %}
+
+{%if consul_dns_recursor_enabled %}"recursor": "{{consul_dns_recursor}}",{% endif %}
+}
