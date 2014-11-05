@@ -1,0 +1,5 @@
+files/consul.crt
+files/consul.csr
+files/consul.key
+files/consul_ca.crt
+
