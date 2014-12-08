@@ -1,17 +1,17 @@
 {
 
 {% if consul_acl_enabled %}
-"acl_datacenter": "{{consul_datacenter}}",
+"acl_datacenter": "{{consul_acl_datacenter}}",
 
-"acl_default_policy": "{{consul_acl_default_policy}}",
+{%if consul_acl_default_policy %}"acl_default_policy": "{{consul_acl_default_policy}}",{% endif %}
 
-"acl_down_policy": "{{consul_acl_down_policy}}",
+{% if consul_acl_down_policy %}"acl_down_policy": "{{consul_acl_down_policy}}",{% endif %}
 
 {% if consul_server %}"acl_master_token": "{{consul_acl_master_token}}",{% endif %}
 
-"acl_token": "{{consul_acl_token}}",
+{% if not consul_server %}"acl_token": "{{consul_acl_token}}",{% endif %}
 
-"acl_ttl": "{{consul_acl_ttl}}",
+{% if consul_acl_ttl %}"acl_ttl": "{{consul_acl_ttl}}",{% endif %}
 
 {% endif %}
 {% if consul_encrypt_enabled %}"encrypt": "{{consul_encrypt_key}}",{% endif %}

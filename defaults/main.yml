@@ -30,14 +30,14 @@ consul_client_address: '{{consul_interface}}'
 consul_advertise_address: '{{consul_interface}}'
 consul_bind_address: '{{consul_interface}}'
 
-consul_acl_enabled: false
+consul_acl_enabled: true
 consul_acl_datacenter: '{{consul_datacenter}}'
 consul_acl_default_policy: 'allow'
 consul_acl_down_policy: 'extend-cache'
 
-# consul_acl_master_token:
-# consul_acl_token:
-consul_acl_ttl: 30
+consul_acl_master_token: 4791402A-D875-4C18-8316-E652DBA53B18
+consul_acl_token: C818728E-5D0F-4E97-8CDA-C4E4F9518744
+consul_acl_ttl: 30s
 
 consul_dns_address: '{{consul_client_address}}'
 consul_http_address: '{{consul_client_address}}'
