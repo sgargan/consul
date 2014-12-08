@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ -e consul_ca.crt ]; then
+  echo "Certs already exist, aborting creation."
+  exit 0
+fi
+
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $script_dir
+
 openssl genrsa -out consul.key 4096
 
 openssl req -new -x509 -days 365 -key consul.key -subj '/C=US/ST=Somestate/L=sometown/O=somecompany/OU=someorg/CN=someguy' -out consul_ca.crt
