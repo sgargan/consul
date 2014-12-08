@@ -5,7 +5,7 @@ consul_conf_dir: '{{consul_dir}}/conf.d'
 consul_data_dir: '{{consul_dir}}/data'
 consul_log_dir: '{{consul_dir}}/logs'
 consul_ui_dir: '{{consul_dir}}/dist'
-consul_url: https://dl.bintray.com/mitchellh/consul/{{consul_version}}_linux_amd64.zip
+consul_url: https://dl.bintray.com/mitchellh/consul/{{consul_version}}
 consul_ui_url: https://dl.bintray.com/mitchellh/consul/{{consul_version}}_web_ui.zip
 consul_user: consul
 consul_group: consul

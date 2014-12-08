@@ -1,6 +1,3 @@
-Introduction
-============
-
 Ansible role to install the Consul.io Service discovery and clustering framework (http://consul.io). The role targets linux, and aims to be as generic as possible, avoiding package managers, installing to '/opt' and optionally using the supervisord process manager to control the service.
 
 ansible-galaxy install -p <your_roles> sgargan.consul
@@ -24,7 +21,7 @@ The role can be used to install either the server or the agent. It installs the 
 ```
 
 Bootstrapping
-=============
+-------------
 
 Note that by default when creating a server cluster you need to have the servers to elect a leader until all the servers are ready. This is called bootstrapping and can be read about in detail [here](https://consul.io/docs/guides/bootstrapping.html).
 
@@ -41,7 +38,7 @@ To bootstrap the servers you pass a group of servers to the role as it is being 
 Consul will expect the number of servers in the supplied group to join the cluster and will wait to beging the leader election until at least that many servers have joined.
 
 Joining
-=======
+-------
 
 For the agent role this consul_join can be used to supply the list of servers to join when the agent starts e.g.
 
@@ -54,9 +51,9 @@ For the agent role this consul_join can be used to supply the list of servers to
 ```
 
 Using Supervisor
-================
+----------------
 
-Supervisor is recommended to manage the Consul process lifecycle, but to allow for users who might not want the supervisor, the consul role does not have a dependency on supervisor role, so you must apply it yourself. A complimentary Supervisor role can be downloaded from galaxy as follows
+I like to use Supervisor to manage the Consul process lifecycle, the consul role does not have a dependency on supervisor role, so you must apply it yourself. A complimentary Supervisor role can be downloaded from galaxy as follows
 
 ```bash
 ansible-galaxy install -p <your_roles> sgargan.supervisor

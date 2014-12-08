@@ -1,34 +1,5 @@
-- get_url: url='{{consul_url}}' dest=/tmp/consul.zip validate_certs=no
+- include: install_linux.yml
+  when: not ansible_os_family == 'Darwin' 
 
-- get_url: url='{{consul_ui_url}}' dest=/tmp/consul_ui.zip validate_certs=no
-
-- group: name={{consul_group}}
-
-- user: name={{consul_user}} group={{consul_group}}
-
-- name: create consul dir
-  file: path={{item}} state=directory owner={{consul_user}} group={{consul_group}}
-  with_items:
-    - '{{consul_dir}}'
-    - '{{consul_dir}}/bin'
-    - '{{consul_conf_dir}}'
-    - '{{consul_data_dir}}'
-    - '{{consul_log_dir}}'
-
-- name: unpack the consul archive
-  command: unzip -o /tmp/consul.zip -d {{consul_dir}}/bin
-
-- name: unpack the consul_ui archive
-  command: unzip -o /tmp/consul_ui.zip -d {{consul_dir}}
-
-- name: remove tmp consul zips
-  file: path=/tmp/{{item}}.zip state=absent
-  with_items:
-    - consul_ui
-    - consul
-
-- name: make link to consul folder
-  file: src='{{consul_dir}}' dest=/opt/consul state=link
-
-- name: make consul available on the path
-  command: update-alternatives --install "/usr/bin/consul" "consul" "{{consul_dir}}/bin/consul" 100
+- include: install_osx.yml
+  when: ansible_os_family == 'Darwin'

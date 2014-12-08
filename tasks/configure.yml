@@ -1,12 +1,12 @@
 - name: copy over certificates and keys for security
-  copy: src='{{item.name}}' dest='{{item.dest}}' owner={{consul_user}} group={{consul_group}} mode=600
+  copy: src='{{item.name}}' dest='{{item.dest}}' mode=600
   with_items:
     - {name: 'consul_ca.crt', dest: '{{consul_ca_file}}'}
     - {name: 'consul.crt', dest: '{{consul_cert_file}}'}
     - {name: 'consul.key', dest: '{{consul_key_file}}'}
 
 - name: add common configuration
-  template: src={{item}} dest={{consul_conf_dir}}/{{item}} owner=consul group=consul
+  template: src={{item}} dest={{consul_conf_dir}}/{{item}}
   with_items:
     - common.json
     - connections.json
@@ -15,17 +15,21 @@
     - restart consul
 
 - name: Add server configuration
-  template: src=server.json dest={{consul_conf_dir}}/server.json owner=consul group=consul
+  template: src=server.json dest={{consul_conf_dir}}/server.json
   when: consul_server
   notify:
     - restart consul
+    
+- name: change ownership of consul files
+  file: path={{consul_dir}} owner={{consul_user}} group={{consul_group}} recurse=true
+  when: not ansible_os_family == 'Darwin'
 
 - name: Install the supervisord config script
   template: src=supervisor.d_consul.conf dest={{consul_supervisord_config_dir}}/consul.conf owner=root group=root mode=0644
   notify:
     - supervisor started
     - restart consul
-  when: consul_supervisor_enabled
+  when: consul_supervisor_enabled and not ansible_os_family == 'Darwin'
 
 - name: suggest supervisor
   debug: msg="Supervisor process management for consul is not enabled. Consul will not be started automatically. Consider applying role sgargan.supervisord"
