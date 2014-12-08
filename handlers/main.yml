@@ -1,6 +1,8 @@
 - name: supervisor started
   shell: ps -deaf | grep supervisord | grep -v grep | awk '{print $2};' | xargs kill -1
+  when: consul_supervisor_enabled
   notify: restart consul
 
 - name: restart consul
   supervisorctl: name=consul state=restarted
+  when: consul_supervisor_enabled

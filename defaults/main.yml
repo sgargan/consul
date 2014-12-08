@@ -11,7 +11,8 @@ consul_user: consul
 consul_group: consul
 consul_log_level: info
 consul_bootstrap_expect: 2
-supervisord_config_dir: /etc/supervisor.d
+consul_supervisor_enabled: false
+consul_supervisord_config_dir: /etc/supervisor.d
 consul_join: []
 
 consul_root_cert_installed: false

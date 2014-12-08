@@ -1,9 +1,3 @@
-- local_action: script certs.sh
-  register: stat_result
-  sudo: no
-
-- debug: var=stat_result
-
 - name: copy over certificates and keys for security
   copy: src='{{item.name}}' dest='{{item.dest}}' owner={{consul_user}} group={{consul_group}} mode=600
   with_items:
@@ -27,7 +21,12 @@
     - restart consul
 
 - name: Install the supervisord config script
-  template: src=supervisor.d_consul.conf dest={{supervisord_config_dir}}/consul.conf owner=root group=root mode=0644
+  template: src=supervisor.d_consul.conf dest={{consul_supervisord_config_dir}}/consul.conf owner=root group=root mode=0644
   notify:
     - supervisor started
     - restart consul
+  when: consul_supervisor_enabled
+
+- name: suggest supervisor
+  debug: msg="Supervisor process management for consul is not enabled. Consul will not be started automatically. Consider applying role sgargan.supervisord"
+  when: not consul_supervisor_enabled

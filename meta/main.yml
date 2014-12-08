@@ -13,6 +13,3 @@ galaxy_info:
   categories:
     - clustering
     - monitoring
-
-dependencies:
-  - { role: sgargan.supervisor }
