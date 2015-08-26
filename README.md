@@ -1,6 +1,8 @@
 Ansible role to install the Consul.io Service discovery and clustering framework (http://consul.io). The role targets linux, and aims to be as generic as possible, avoiding package managers, installing to '/opt' and optionally using the supervisord process manager to control the service.
 
+```bash
 ansible-galaxy install -p <your_roles> sgargan.consul
+```
 
 The role can be used to install either the server or the agent. It installs the agent by default, and the server by setting the consul_server flag to true when calling role
 
