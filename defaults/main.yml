@@ -105,7 +105,3 @@ consul_statsite_enabled: false
 consul_statsite_addr: http://somesite
 
 consul_syslog_facility: LOCAL0
-
-consul_verify_incoming: '{{json_true}}'
-
-consul_verify_outgoing: '{{json_true}}'
