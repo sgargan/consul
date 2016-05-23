@@ -4,6 +4,7 @@
     - {name: 'consul_ca.crt', dest: '{{consul_ca_file}}'}
     - {name: 'consul.crt', dest: '{{consul_cert_file}}'}
     - {name: 'consul.key', dest: '{{consul_key_file}}'}
+  when: consul_connection_verify_enabled
 
 - name: add common configuration
   template: src={{item}} dest={{consul_conf_dir}}/{{item}}
