@@ -1,10 +1,7 @@
-- get_url: url='{{consul_url}}_linux_amd64.zip' dest=/tmp/consul.zip validate_certs=no
-
-- get_url: url='{{consul_ui_url}}' dest=/tmp/consul_ui.zip validate_certs=no
-  when: consul_server == true
+- get_url: url='{{consul_url}}/consul_{{consul_version}}_linux_amd64.zip' dest=/tmp/consul.zip validate_certs=no
 
 - group: name={{consul_group}}
-  
+
 - user: name={{consul_user}} group={{consul_group}}
 
 - name: create consul dir
@@ -15,26 +12,21 @@
     - '{{consul_conf_dir}}'
     - '{{consul_data_dir}}'
     - '{{consul_log_dir}}'
-    
+
 - name: copy over distro agnostic unpack script
   template: src=unpack dest=/tmp/unpack mode=755
 
 - name: unpack the consul archive
   command: /tmp/unpack /tmp/consul.zip {{consul_dir}}/bin
 
-- name: unpack the consul_ui archive
-  command: /tmp/unpack /tmp/consul_ui.zip {{consul_dir}}
-  when: consul_server == true
-
 - name: remove tmp consul zips
   file: path=/tmp/{{item}}.zip state=absent
   with_items:
-    - consul_ui
     - consul
 
 - name: make link to consul folder
   file: src='{{consul_dir}}' dest=/opt/consul state=link
-  
+
 - name: make consul executable
   file: path="{{consul_dir}}/bin/consul" mode=755
 
