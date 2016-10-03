@@ -13,6 +13,11 @@
     - '{{consul_data_dir}}'
     - '{{consul_log_dir}}'
 
+- name: stop consul (in case it's running, else data folder will be locked)
+  supervisorctl: name=consul state=stopped
+  when: consul_supervisor_enabled and not ansible_os_family == 'Darwin'
+  ignore_errors: yes
+
 - name: copy over distro agnostic unpack script
   template: src=unpack dest=/tmp/unpack mode=755
 
@@ -32,3 +37,7 @@
 
 - name: make consul available on the path
   command: update-alternatives --install "/usr/bin/consul" "consul" "{{consul_dir}}/bin/consul" 100
+
+- name: restart consul (in case it was just stopped)
+  supervisorctl: name=consul state=restarted
+  when: consul_supervisor_enabled and not ansible_os_family == 'Darwin'
