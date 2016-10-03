@@ -11,9 +11,10 @@
 "addresses": {
   {%if consul_dns_enabled %}"dns": "{{consul_dns_address}}",{% endif %}
   "http": "{{consul_http_address}}",
-  "rpc": "{{consul_rpc_address}}",
-  "advertise_addr": "{{consul_advertise_address}}"
-},
+  "rpc": "{{consul_rpc_address}}"
+  },
+
+"advertise_addr": "{{consul_advertise_address}}",
 
 "client_addr": "{{consul_client_address}}",
 
@@ -33,9 +34,10 @@
 "dns_config": {
   "max_stale": "{{consul_dns_max_stale}}",
   "node_ttl": "{{consul_dns_node_ttl}}",
-  "enable_truncate": {{consul_dns_enable_truncate}},
-  "domain": "{{consul_dns_domain}}"
-}{% endif %}
+  "enable_truncate": {{consul_dns_enable_truncate}}
+},
+"domain": "{{consul_dns_domain}}"
+{% endif %}
 
 {%if consul_dns_recursor_enabled %}"recursor": "{{consul_dns_recursor}}",{% endif %}
 }
